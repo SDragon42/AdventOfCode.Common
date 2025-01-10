@@ -41,7 +41,7 @@ jobs:
     - name: Publish
       run: >
         dotnet nuget push AdventOfCode.Common.*.nupkg
-        -s https nuget.pkg.github.com/SDragon42/index.json
+        -s https://nuget.pkg.github.com/SDragon42/index.json
         -k ${{ secrets.PUBLISH_TOKEN }}
 
     # - name: Publish
