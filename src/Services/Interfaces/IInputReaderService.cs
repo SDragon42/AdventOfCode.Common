@@ -2,7 +2,7 @@
 
 namespace AdventOfCode.Common.Services.Interfaces
 {
-    public interface IInputReader
+    public interface IInputReaderService
     {
         /// <summary>
         /// Reads all lines from the input file.

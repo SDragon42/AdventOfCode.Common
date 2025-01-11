@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using AdventOfCode.Common.Helpers;
 using AdventOfCode.Common.Models.Interfaces;
 
 namespace AdventOfCode.Common.Models
@@ -32,21 +33,12 @@ namespace AdventOfCode.Common.Models
                 && 0 <= point.Y && point.Y < _ySize;
         }
 
-        public Point IndexToPoint(int index)
-        {
-            var x = index % _xSize;
-            var y = index / _xSize;
-
-            return new Point(x, y);
-        }
-        public int PointToIndex(Point point)
-        {
-            var x = point.X;
-            var y = point.Y;
-
-            var index = y * _xSize + x;
-            return index;
-        }
+        public Point IndexToPoint(int index) => GridHelper.IndexToPoint(index, _xSize);
+        
+        
+        public int PointToIndex(Point point) => GridHelper.PointToIndex(point, _xSize);
+        
+        
 
         public TCell this[int index]
         {

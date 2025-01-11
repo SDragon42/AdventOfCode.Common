@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>AdventOfCode.Common</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Title>Advent of Code - Common</Title>
     <Authors>SDragon42</Authors>
     <PackageId>$(AssemblyName)</PackageId>

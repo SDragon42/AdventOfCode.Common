@@ -5,10 +5,10 @@ using AdventOfCode.Common.Services.Interfaces;
 
 namespace AdventOfCode.Common.Services
 {
-    public class InputReader : IInputReader
+    public class InputReaderService : IInputReaderService
     {
         private readonly string _inputFolderPath;
-        public InputReader(string inputFolderPath)
+        public InputReaderService(string inputFolderPath)
         {
             _inputFolderPath = inputFolderPath;
         }
