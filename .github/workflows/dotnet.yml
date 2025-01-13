@@ -22,13 +22,10 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    # - name: Build
-    #   run: dotnet build --no-restore
-
     - name: Test
       run: dotnet test --verbosity normal
 
-    - name: Build 2
+    - name: Release Build
       run: dotnet build --no-restore --configuration Release
 
     - name: Package
@@ -42,9 +39,3 @@ jobs:
         -s https://nuget.pkg.github.com/SDragon42/index.json
         -k ${{ secrets.PUBLISH_TOKEN }}
         --skip-duplicate
-
-    # - name: Publish
-    #   run: >
-    #     dotnet nuget push AdventOfCode.Common.${{ github.ref_name }}.nupkg
-    #     -s https nuget.pkg.github.com/SDragon42/index.json
-    #     -k ${{ secrets.PUBLISH_TOKEN }}
