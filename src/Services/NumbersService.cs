@@ -65,6 +65,11 @@ namespace AdventOfCode.Common.Services
                 throw new ArgumentException("Not enough values specified. There must be at least 1.", nameof(values));
             }
 
+            if (values.Contains(0))
+            {
+                return 0;
+            }
+
             return values.Aggregate(1L, LowestCommonMultiple);
         }
 
