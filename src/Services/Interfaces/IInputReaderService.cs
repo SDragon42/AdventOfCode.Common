@@ -12,7 +12,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// </summary>
         /// <param name="day">The puzzle day for the data files.</param>
         /// <param name="name">The name of the data file without extension.</param>
-        /// <returns>An enumerable collection of strings representing each line in the input file.</returns>
+        /// <returns>An enumerable collection of strings representing each line in the input file, or null if an error occurs.</returns>
         IEnumerable<string> ReadLines(int day, string name);
 
         /// <summary>
