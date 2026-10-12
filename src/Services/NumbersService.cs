@@ -58,6 +58,10 @@ namespace AdventOfCode.Common.Services
             {
                 throw new ArgumentException("Not enough values specified. There must be at least 1.", nameof(values));
             }
+            if (values.Any(x => x <= 0))
+            {
+                throw new ArgumentException("All values must be greater than 0.", nameof(values));
+            }
 
             var accumulators = new long[values.Count];
             values.CopyTo(accumulators, 0);
