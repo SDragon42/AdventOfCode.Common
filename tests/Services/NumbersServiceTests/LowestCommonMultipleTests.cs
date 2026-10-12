@@ -3,6 +3,28 @@
 public class LowestCommonMultipleTests : NumbersServiceTestBase
 {
     [Theory]
+    [InlineData(2, 5, 10)]
+    [InlineData(60, 90, 180)]
+    [InlineData(21, 12, 84)]
+    public void LowestCommonMultiple_ValidPairOfNumbers_ReturnsExpected(long a, long b, long expected)
+    {
+        var result = _numbersService.LowestCommonMultiple(a, b);
+
+        Assert.Equal(expected, result);
+    }
+
+
+    [Theory]
+    [InlineData(0, 5)]
+    [InlineData(60, -90)]
+    [InlineData(-21, -12)]
+    public void LowestCommonMultiple_InvalidPairOfNumbers_ReturnsExpected(long a, long b)
+    {
+        Assert.Throws<ArgumentException>(() => _numbersService.LowestCommonMultiple(a, b));
+    }
+
+
+    [Theory]
     [MemberData(nameof(Data_LowestCommonMultiple_ValidListOfNumbers))]
     public void LowestCommonMultiple_ValidListOfNumbers_ReturnsExpected(IList<long> values, long expected)
     {

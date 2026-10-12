@@ -48,6 +48,15 @@ namespace AdventOfCode.Common.Services
         /// <inheritdoc/>
         public long LowestCommonMultiple(long a, long b)
         {
+            if (a <= 0)
+            {
+                throw new ArgumentException("Value must be greater than 0.", nameof(a));
+            }
+            if (b <= 0)
+            {
+                throw new ArgumentException("Value must be greater than 0.", nameof(b));
+            }
+            
             return (a * b) / HighestCommonFactor(a, b);
         }
 
