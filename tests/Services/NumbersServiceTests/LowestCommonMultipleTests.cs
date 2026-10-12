@@ -23,6 +23,17 @@ public class LowestCommonMultipleTests : NumbersServiceTestBase
     }
 
     [Theory]
+    [InlineData(0, 5, 0)]
+    [InlineData(-2, 3, 6)]
+    [InlineData(2_000_000_011, 2_000_000_033, 4_000_000_088_000_000_363)]
+    public void LowestCommonMultiple_HandlesZeroSignsAndLargeValues(long a, long b, long expected)
+    {
+        var result = _numbersService.LowestCommonMultiple([a, b]);
+
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
     [MemberData(nameof(Data_LowestCommonMultiple_NullList_ThrowsArgumentException))]
     public void LowestCommonMultiple_NullList_ThrowsArgumentException(IList<long> values)
     {

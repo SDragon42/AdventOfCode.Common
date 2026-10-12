@@ -48,7 +48,13 @@ namespace AdventOfCode.Common.Services
         /// <inheritdoc/>
         public long LowestCommonMultiple(long a, long b)
         {
-            return (a * b) / HighestCommonFactor(a, b);
+            if (a == 0 || b == 0)
+            {
+                return 0;
+            }
+
+            var lcm = checked((a / HighestCommonFactor(a, b)) * b);
+            return lcm < 0 ? checked(-lcm) : lcm;
         }
 
         /// <inheritdoc/>
@@ -59,16 +65,7 @@ namespace AdventOfCode.Common.Services
                 throw new ArgumentException("Not enough values specified. There must be at least 1.", nameof(values));
             }
 
-            var accumulators = new long[values.Count];
-            values.CopyTo(accumulators, 0);
-
-            while (!accumulators.All(x => x == accumulators[0]))
-            {
-                var index = Array.IndexOf(accumulators, accumulators.Min());
-                accumulators[index] += values[index];
-            }
-
-            return accumulators[0];
+            return values.Aggregate(1L, LowestCommonMultiple);
         }
 
     }
