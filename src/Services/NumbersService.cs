@@ -57,15 +57,16 @@ namespace AdventOfCode.Common.Services
                 throw new ArgumentException("Value must be greater than 0.", nameof(b));
             }
             
-            return (a * b) / HighestCommonFactor(a, b);
+            // return (a * b) / HighestCommonFactor(a, b);
+            return (a / HighestCommonFactor(a, b)) * b;
         }
 
         /// <inheritdoc/>
         public long LowestCommonMultiple(IList<long> values)
         {
-            if (values is null || values.Count <= 0)
+            if (values is null || values.Count < 2)
             {
-                throw new ArgumentException("Not enough values specified. There must be at least 1.", nameof(values));
+                throw new ArgumentException("Not enough values specified. There must be at least 2.", nameof(values));
             }
             if (values.Any(x => x <= 0))
             {

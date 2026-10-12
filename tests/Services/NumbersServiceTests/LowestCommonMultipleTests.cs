@@ -6,6 +6,7 @@ public class LowestCommonMultipleTests : NumbersServiceTestBase
     [InlineData(2, 5, 10)]
     [InlineData(60, 90, 180)]
     [InlineData(21, 12, 84)]
+    [InlineData(long.MaxValue, long.MaxValue, long.MaxValue)]
     public void LowestCommonMultiple_ValidPairOfNumbers_ReturnsExpected(long a, long b, long expected)
     {
         var result = _numbersService.LowestCommonMultiple(a, b);
@@ -38,6 +39,7 @@ public class LowestCommonMultipleTests : NumbersServiceTestBase
         yield return new object[] { new long[] { 60, 90 }, 180 };
         yield return new object[] { new long[] { 21, 12 }, 84 };
         yield return new object[] { new long[] { 25, 15, 30 }, 150 };
+        yield return new object[] { new long[] { long.MaxValue, long.MaxValue }, long.MaxValue };
     }
 
 
