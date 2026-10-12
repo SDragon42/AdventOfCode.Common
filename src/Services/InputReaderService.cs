@@ -5,9 +5,17 @@ using AdventOfCode.Common.Services.Interfaces;
 
 namespace AdventOfCode.Common.Services
 {
-    public class InputReaderService : IInputReaderService
+    /// <summary>
+    /// Provides methods to read input data from files.
+    /// </summary>
+    public sealed class InputReaderService : IInputReaderService
     {
         private readonly string _inputFolderPath;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputReaderService"/> class with the specified input folder path.
+        /// </summary>
+        /// <param name="inputFolderPath">The path to the folder containing input files.</param>
         public InputReaderService(string inputFolderPath)
         {
             _inputFolderPath = inputFolderPath;
@@ -23,6 +31,7 @@ namespace AdventOfCode.Common.Services
             return filename;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> ReadLines(int day, string name)
         {
             try
@@ -33,6 +42,7 @@ namespace AdventOfCode.Common.Services
             catch { return null; }
         }
 
+        /// <inheritdoc/>
         public string ReadText(int day, string name)
         {
             var lines = ReadLines(day, name);

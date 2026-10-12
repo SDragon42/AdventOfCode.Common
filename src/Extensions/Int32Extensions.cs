@@ -2,8 +2,18 @@
 
 namespace AdventOfCode.Common.Extensions
 {
+    /// <summary>
+    /// Provides extension methods for Int32 data type.
+    /// </summary>
     public static class Int32Extensions
     {
+        /// <summary>
+        /// Gets a single digit from the specified number at the given position.
+        /// </summary>
+        /// <param name="value">The number value.</param>
+        /// <param name="position">The digit position.</param>
+        /// <param name="fromTheLeft">Indicates whether to count the position from the left (default is false, counting from the right).</param>
+        /// <returns>The digit at the specified position.</returns>
         public static int GetDigit(this int value, int position, bool fromTheLeft = false)
         {
             return fromTheLeft
@@ -17,7 +27,7 @@ namespace AdventOfCode.Common.Extensions
         /// </summary>
         /// <param name="value">The number value.</param>
         /// <param name="position">The digit position, from right to left.</param>
-        /// <returns></returns>
+        /// <returns>The digit at the specified position.</returns>
         private static int GetDigitRight(int value, int position)
         {
             var modifier = Convert.ToInt32(Math.Pow(10, position - 1));
@@ -40,7 +50,7 @@ namespace AdventOfCode.Common.Extensions
         /// </summary>
         /// <param name="value">The number value.</param>
         /// <param name="position">The digit position, from left to right.</param>
-        /// <returns></returns>
+        /// <returns>The digit at the specified position.</returns>
         private static int GetDigitLeft(int value, int position)
         {
             var digit = value.ToString()[position - 1];
