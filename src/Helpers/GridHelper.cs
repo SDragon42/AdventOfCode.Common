@@ -21,10 +21,10 @@ namespace AdventOfCode.Common.Helpers
         /// <returns>The drawn grid as a string.</returns>
         public static string DrawPointGrid2D<TValue>(IDictionary<Point, TValue> gridData, Func<TValue, string> DrawElementMethod = null, Size? minArea = null)
         {
-            var minX = gridData.Keys.Select(h => h.X).Min();
-            var maxX = gridData.Keys.Select(h => h.X).Max();
-            var minY = gridData.Keys.Select(h => h.Y).Min();
-            var maxY = gridData.Keys.Select(h => h.Y).Max();
+            var minX = gridData.Keys.Min(h => h.X);
+            var maxX = gridData.Keys.Max(h => h.X);
+            var minY = gridData.Keys.Min(h => h.Y);
+            var maxY = gridData.Keys.Max(h => h.Y);
 
             if (minArea.HasValue)
             {
@@ -77,10 +77,10 @@ namespace AdventOfCode.Common.Helpers
         /// <returns>The drawn grid as a string.</returns>
         public static string DrawScreenGrid2D<TValue>(IDictionary<Point, TValue> gridData, Func<TValue, string> DrawElementMethod = null)
         {
-            var minX = gridData.Keys.Select(h => h.X).Min();
-            var maxX = gridData.Keys.Select(h => h.X).Max();
-            var minY = gridData.Keys.Select(h => h.Y).Min();
-            var maxY = gridData.Keys.Select(h => h.Y).Max();
+            var minX = gridData.Keys.Min(h => h.X);
+            var maxX = gridData.Keys.Max(h => h.X);
+            var minY = gridData.Keys.Min(h => h.Y);
+            var maxY = gridData.Keys.Max(h => h.Y);
 
             var text = new StringBuilder();
             for (int y = minY; y <= maxY; y++)
@@ -137,16 +137,13 @@ namespace AdventOfCode.Common.Helpers
         /// Converts an array index to a grid x,y point.
         /// </summary>
         /// <param name="index">The array index.</param>
-        /// <param name="xMax">The maximum x value of the grid.</param>
+        /// <param name="xMax">The width of the grid.</param>
         /// <param name="origin">The origin point of the grid (optional).</param>
         /// <returns>The corresponding grid point.</returns>
         public static Point IndexToPoint(int index, int xMax, Point? origin = null)
         {
             var x = (index % xMax) + (origin?.X ?? 0);
             var y = (index / xMax) + (origin?.Y ?? 0);
-
-            //var x = index % _xSize;
-            //var y = index / _xSize;
 
             return new Point(x, y);
         }
@@ -155,16 +152,13 @@ namespace AdventOfCode.Common.Helpers
         /// Converts a grid x.y Point object to an array index.
         /// </summary>
         /// <param name="point">The grid point to convert.</param>
-        /// <param name="xMax">The maximum x value of the grid.</param>
+        /// <param name="xMax">The width of the grid.</param>
         /// <param name="origin">The origin point of the grid (optional).</param>
         /// <returns>The corresponding array index.</returns>
         public static int PointToIndex(Point point, int xMax, Point? origin = null)
         {
             var x = point.X + (origin?.X ?? 0);
             var y = point.Y + (origin?.Y ?? 0);
-
-            //var x = point.X;
-            //var y = point.Y;
 
             var index = y * xMax + x;
             return index;
