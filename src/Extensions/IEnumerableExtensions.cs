@@ -4,14 +4,17 @@ using System.Linq;
 
 namespace AdventOfCode.Common.Extensions
 {
+    /// <summary>
+    /// Provides extension methods for working with IEnumerable collections.
+    /// </summary>
     public static class IEnumerableExtensions
     {
         /// <summary>
-        /// 
+        /// Executes the specified action on each element of the enumerable.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="elements"></param>
-        /// <param name="actionMethod"></param>
+        /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
+        /// <param name="elements">The enumerable whose elements the action will be executed on.</param>
+        /// <param name="actionMethod">The action to execute on each element.</param>
         public static void ForEach<T>(this IEnumerable<T> elements, Action<T> actionMethod)
         {
             if (elements is null) throw new ArgumentNullException(nameof(elements));
@@ -25,10 +28,10 @@ namespace AdventOfCode.Common.Extensions
         /// <summary>
         /// Returns an enumerable yielding a sliding window containing elements drawn from the input enumerable.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="elements"></param>
-        /// <param name="windowSize"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
+        /// <param name="elements">The enumerable whose elements will be used to create the sliding windows.</param>
+        /// <param name="windowSize">The size of each sliding window.</param>
+        /// <returns>An enumerable of arrays, each representing a sliding window of the specified size.</returns>
         /// <remarks>Code from: https://stackoverflow.com/a/8877876/6136</remarks>
         public static IEnumerable<T[]> Windowed<T>(this IEnumerable<T> elements, int windowSize)
         {
@@ -69,9 +72,9 @@ namespace AdventOfCode.Common.Extensions
         /// Returns a list of all possible combinations of the item list.
         /// (item list only tested with unique values)
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="items"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of elements in the item list.</typeparam>
+        /// <param name="items">The enumerable of items to generate permutations for.</param>
+        /// <returns>An enumerable of enumerables, each representing a unique permutation of the input items.</returns>
         /// <remarks>
         /// Sourced and modified from:
         /// https://stackoverflow.com/questions/5132758/words-combinations-without-repetition
@@ -95,9 +98,9 @@ namespace AdventOfCode.Common.Extensions
         /// <summary>
         /// Creates a cartesian product of 2 or more enumerables.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sequences"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of elements in the input sequences.</typeparam>
+        /// <param name="sequences">The input sequences to generate the cartesian product from.</param>
+        /// <returns>An enumerable of enumerables, each representing a combination from the cartesian product of the input sequences.</returns>
         /// <remarks>
         /// Sourced and modified from:
         /// https://ericlippert.com/2010/06/28/computing-a-cartesian-product-with-linq/

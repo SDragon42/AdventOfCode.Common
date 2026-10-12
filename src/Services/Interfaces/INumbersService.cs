@@ -2,6 +2,9 @@
 
 namespace AdventOfCode.Common.Services.Interfaces
 {
+    /// <summary>
+    /// Provides methods for performing common numerical operations.
+    /// </summary>
     public interface INumbersService
     {
         /// <summary>
@@ -9,7 +12,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// </summary>
         /// <param name="a">The first number.</param>
         /// <param name="b">The second number.</param>
-        /// <returns></returns>
+        /// <returns>The Highest Common Factor of the two numbers.</returns>
         /// <remarks>
         /// https://stackoverflow.com/a/20824923/6136
         /// https://www.cuemath.com/numbers/hcf-highest-common-factor/
@@ -20,7 +23,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// Finds the Highest Common Factor between all the numbers.
         /// </summary>
         /// <param name="values">The numbers. At least 2 numbers must be specified.</param>
-        /// <returns></returns>
+        /// <returns>The Highest Common Factor of all the numbers.</returns>
         /// <remarks>
         /// https://stackoverflow.com/a/20824923/6136
         /// https://www.cuemath.com/numbers/hcf-highest-common-factor/
@@ -34,7 +37,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// </summary>
         /// <param name="a">The first number.</param>
         /// <param name="b">The second number.</param>
-        /// <returns></returns>
+        /// <returns>The Lowest Common Multiple of the two numbers.</returns>
         /// <remarks>
         /// https://stackoverflow.com/a/20824923/6136
         /// https://www.cuemath.com/numbers/lcm-least-common-multiple/
@@ -45,7 +48,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// Finds the Lowest Common Multiple between all the numbers.
         /// </summary>
         /// <param name="values">The numbers. At least 2 numbers must be specified.</param>
-        /// <returns></returns>
+        /// <returns>The Lowest Common Multiple of all the numbers.</returns>
         /// <remarks>
         /// https://stackoverflow.com/a/20824923/6136
         /// https://www.cuemath.com/numbers/lcm-least-common-multiple/

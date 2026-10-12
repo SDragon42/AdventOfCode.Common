@@ -5,8 +5,17 @@ using AdventOfCode.Common.Services.Interfaces;
 
 namespace AdventOfCode.Common.Services
 {
-    public class NumbersService : INumbersService
+    /// <summary>
+    /// Provides methods for performing common numerical operations.
+    /// </summary>
+    public sealed class NumbersService : INumbersService
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumbersService"/> class.
+        /// </summary>
+        public NumbersService() { }
+
+        /// <inheritdoc/>
         public long HighestCommonFactor(long a, long b)
         {
             while (b != 0)
@@ -18,6 +27,7 @@ namespace AdventOfCode.Common.Services
             return a;
         }
 
+        /// <inheritdoc/>
         public long HighestCommonFactor(IList<long> values)
         {
             if (values is null || values.Count <= 1)
@@ -35,11 +45,13 @@ namespace AdventOfCode.Common.Services
 
 
 
+        /// <inheritdoc/>
         public long LowestCommonMultiple(long a, long b)
         {
             return (a * b) / HighestCommonFactor(a, b);
         }
 
+        /// <inheritdoc/>
         public long LowestCommonMultiple(IList<long> values)
         {
             if (values is null || values.Count <= 0)
@@ -47,16 +59,16 @@ namespace AdventOfCode.Common.Services
                 throw new ArgumentException("Not enough values specified. There must be at least 1.", nameof(values));
             }
 
-            var acumulators = new long[values.Count];
-            values.CopyTo(acumulators, 0);
+            var accumulators = new long[values.Count];
+            values.CopyTo(accumulators, 0);
 
-            while (!acumulators.All(x => x == acumulators[0]))
+            while (!accumulators.All(x => x == accumulators[0]))
             {
-                var index = Array.IndexOf(acumulators, acumulators.Min());
-                acumulators[index] += values[index];
+                var index = Array.IndexOf(accumulators, accumulators.Min());
+                accumulators[index] += values[index];
             }
 
-            return acumulators[0];
+            return accumulators[0];
         }
 
     }

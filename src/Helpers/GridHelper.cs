@@ -6,8 +6,19 @@ using System.Text;
 
 namespace AdventOfCode.Common.Helpers
 {
+    /// <summary>
+    /// Provides helper methods for working with 2D grids.
+    /// </summary>
     public static class GridHelper
     {
+        /// <summary>
+        /// Draws a 2D grid from the given point-based grid data.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the grid elements.</typeparam>
+        /// <param name="gridData">The point-based grid data.</param>
+        /// <param name="DrawElementMethod">The method to draw each grid element.</param>
+        /// <param name="minArea">The minimum area of the grid to draw.</param>
+        /// <returns>The drawn grid as a string.</returns>
         public static string DrawPointGrid2D<TValue>(IDictionary<Point, TValue> gridData, Func<TValue, string> DrawElementMethod = null, Size? minArea = null)
         {
             var minX = gridData.Keys.Select(h => h.X).Min();
@@ -57,6 +68,13 @@ namespace AdventOfCode.Common.Helpers
         }
 
 
+        /// <summary>
+        /// Draws a 2D grid from the given point-based grid data.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the grid elements.</typeparam>
+        /// <param name="gridData">The point-based grid data.</param>
+        /// <param name="DrawElementMethod">The method to draw each grid element.</param>
+        /// <returns>The drawn grid as a string.</returns>
         public static string DrawScreenGrid2D<TValue>(IDictionary<Point, TValue> gridData, Func<TValue, string> DrawElementMethod = null)
         {
             var minX = gridData.Keys.Select(h => h.X).Min();
@@ -84,6 +102,13 @@ namespace AdventOfCode.Common.Helpers
         }
 
 
+        /// <summary>
+        /// Draws a 2D grid from the given list-based grid data.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the grid elements.</typeparam>
+        /// <param name="gridData">The list-based grid data.</param>
+        /// <param name="DrawElementMethod">The method to draw each grid element.</param>
+        /// <returns>The drawn grid as a string.</returns>
         public static string DrawScreenGrid2D<TValue>(IList<IList<TValue>> gridData, Func<TValue, string> DrawElementMethod = null)
         {
             var minX = 0;
@@ -111,10 +136,10 @@ namespace AdventOfCode.Common.Helpers
         /// <summary>
         /// Converts an array index to a grid x,y point.
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="xMax"></param>
-        /// <param name="origin"></param>
-        /// <returns></returns>
+        /// <param name="index">The array index.</param>
+        /// <param name="xMax">The maximum x value of the grid.</param>
+        /// <param name="origin">The origin point of the grid (optional).</param>
+        /// <returns>The corresponding grid point.</returns>
         public static Point IndexToPoint(int index, int xMax, Point? origin = null)
         {
             var x = (index % xMax) + (origin?.X ?? 0);
@@ -129,10 +154,10 @@ namespace AdventOfCode.Common.Helpers
         /// <summary>
         /// Converts a grid x.y Point object to an array index.
         /// </summary>
-        /// <param name="point"></param>
-        /// <param name="xMax"></param>
-        /// <param name="origin"></param>
-        /// <returns></returns>
+        /// <param name="point">The grid point to convert.</param>
+        /// <param name="xMax">The maximum x value of the grid.</param>
+        /// <param name="origin">The origin point of the grid (optional).</param>
+        /// <returns>The corresponding array index.</returns>
         public static int PointToIndex(Point point, int xMax, Point? origin = null)
         {
             var x = point.X + (origin?.X ?? 0);
