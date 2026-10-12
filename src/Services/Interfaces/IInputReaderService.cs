@@ -12,7 +12,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// </summary>
         /// <param name="day">The puzzle day for the data files.</param>
         /// <param name="name">The name of the data file without extension.</param>
-        /// <returns>An enumerable collection of strings representing each line in the input file, or null if an error occurs.</returns>
+        /// <returns>An enumerable collection of strings representing each line in the input file.</returns>
         IEnumerable<string> ReadLines(int day, string name);
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace AdventOfCode.Common.Services.Interfaces
         /// </summary>
         /// <param name="day">The puzzle day for the data files.</param>
         /// <param name="name">The name of the data file without extension.</param>
-        /// <returns>The text from the input file, or null if an error occurs or the file is empty.</returns>
+        /// <returns>The text from the input file, or null if the file is empty.</returns>
         string ReadText(int day, string name);
     }
 }
