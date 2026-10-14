@@ -1,0 +1,74 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "AdventOfCode.Common.sln"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "Clear local Nuget Packages",
+            "command": "NuGets-Clear-Cache",
+            "type": "shell",
+            "args": [
+                "-RemoveLocal"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "Deploy Local Nuget Packages",
+            "command": "NuGets-Deploy",
+            "type": "shell",
+            "args": [],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "Build & Deploy Nuget Package",
+            "dependsOn": [ 
+                "Build",
+                "Clear local Nuget Packages",
+                "Deploy Local Nuget Packages"
+            ],
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+
+        {
+            "label": "AdventOfCode.Common:test",
+            "command": "dotnet", 
+            "type": "process",
+            "args": [
+                "test",
+                "AdventOfCode.Common.sln",
+                "--logger", "\"console;verbosity=normal\""
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}
