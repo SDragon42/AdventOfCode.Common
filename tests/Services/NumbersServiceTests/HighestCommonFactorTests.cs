@@ -8,7 +8,7 @@ public class HighestCommonFactorTests : NumbersServiceTestBase
     [InlineData(100, 150, 50)]
     [InlineData(144, 24, 24)]
     [InlineData(17, 89, 1)]
-    public void HighestCommonFactor_twoValues(long a, long b, long expected)
+    public void HighestCommonFactor_TwoValues_ReturnsExpected(long a, long b, long expected)
     {
         var result = _numbersService.HighestCommonFactor(a, b);
 
@@ -18,7 +18,7 @@ public class HighestCommonFactorTests : NumbersServiceTestBase
     [Theory]
     [InlineData(126, 162, 180, 18)]
     [InlineData(150, 100, 20, 10)]
-    public void HighestCommonFactor_ValidListOfValues(long a, long b, long c, long expected)
+    public void HighestCommonFactor_ValidListOfValues_ReturnsExpected(long a, long b, long c, long expected)
     {
         var result = _numbersService.HighestCommonFactor([a, b, c]);
 

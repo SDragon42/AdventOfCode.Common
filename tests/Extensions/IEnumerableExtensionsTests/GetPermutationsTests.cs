@@ -5,7 +5,7 @@ public class GetPermutationsTests : IEnumerableExtensionsTestBase
     public GetPermutationsTests(ITestOutputHelper output) : base(output) { }
 
     [Fact]
-    public void GetPermutations_ValidSource_Returns()
+    public void GetPermutations_ValidSource_ReturnsExpectedPermutations()
     {
         var input = new[] { 1, 2, 3 };
         var expected = 6;
