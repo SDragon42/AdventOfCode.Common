@@ -16,4 +16,19 @@ public class GetDigitTests
         Assert.Equal(expected, result);
     }
 
+    [Fact]
+    public void GetDigit_DefaultsToCountingFromTheRight()
+    {
+        Assert.Equal(3, 123L.GetDigit(1));
+    }
+
+    [Theory]
+    [InlineData(0L, 1, false, 0)]
+    [InlineData(0L, 1, true, 0)]
+    [InlineData(123L, 4, false, 0)]
+    public void GetDigit_ZeroOrPositionBeyondDigits_ReturnsExpectedDigit(long value, int position, bool fromTheLeft, int expected)
+    {
+        Assert.Equal(expected, value.GetDigit(position, fromTheLeft));
+    }
+
 }
