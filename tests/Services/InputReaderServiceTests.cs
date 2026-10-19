@@ -4,6 +4,115 @@ namespace AdventOfCode.Common.Tests.Services;
 
 public class InputReaderServiceTests
 {
+    private static string CreateTemporaryFolder()
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"AdventOfCode.Common.Tests-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(path);
+        return path;
+    }
+
+
+    [Fact]
+    public void ReadLocalFile_ConfigurationFileExists_ReturnsTrimmedPath()
+    {
+        var configurationFile = Path.Combine(AppContext.BaseDirectory, Constants.AOC_INPUT_PATH);
+        var existingConfiguration = File.Exists(configurationFile)
+            ? File.ReadAllText(configurationFile)
+            : null;
+        try
+        {
+            File.WriteAllText(configurationFile, "  input-folder" + Environment.NewLine);
+
+            Assert.Equal("input-folder", InputReaderService.ReadLocalFile());
+        }
+        finally
+        {
+            if (existingConfiguration is null)
+            {
+                File.Delete(configurationFile);
+            }
+            else
+            {
+                File.WriteAllText(configurationFile, existingConfiguration);
+            }
+        }
+    }
+
+    [Fact]
+    public void NormalizePath_RelativeSegments_ReturnsFullPathAndCreatesDirectory()
+    {
+        var temporaryFolder = CreateTemporaryFolder();
+        var inputFolder = Path.Combine(temporaryFolder, "nested", "..", "inputs");
+        try
+        {
+            var normalizedPath = InputReaderService.NormalizePath(inputFolder);
+
+            Assert.Equal(Path.GetFullPath(inputFolder), normalizedPath);
+            Assert.True(Directory.Exists(normalizedPath));
+        }
+        finally
+        {
+            Directory.Delete(temporaryFolder, true);
+        }
+    }
+
+    [Fact]
+    public void NormalizePath_EnvironmentVariable_ExpandsPath()
+    {
+        var temporaryFolder = CreateTemporaryFolder();
+        var variableName = $"ADVENT_OF_CODE_TEST_{Guid.NewGuid():N}";
+        var existingValue = Environment.GetEnvironmentVariable(variableName);
+        var inputFolder = Path.Combine($"%{variableName}%", "inputs");
+        try
+        {
+            Environment.SetEnvironmentVariable(variableName, temporaryFolder);
+
+            var normalizedPath = InputReaderService.NormalizePath(inputFolder);
+
+            Assert.Equal(Path.Combine(temporaryFolder, "inputs"), normalizedPath);
+            Assert.True(Directory.Exists(normalizedPath));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(variableName, existingValue);
+            Directory.Delete(temporaryFolder, true);
+        }
+    }
+
+    [Fact]
+    public void Constructor_Default_UsesInputFolderFromLocalFile()
+    {
+        var inputFolder = CreateTemporaryFolder();
+        var configurationFile = Path.Combine(AppContext.BaseDirectory, Constants.AOC_INPUT_PATH);
+        var existingConfiguration = File.Exists(configurationFile)
+            ? File.ReadAllText(configurationFile)
+            : null;
+        try
+        {
+            var dayFolder = Path.Combine(inputFolder, "Day03");
+            Directory.CreateDirectory(dayFolder);
+            File.WriteAllText(Path.Combine(dayFolder, "sample.txt"), "configured input");
+            File.WriteAllText(configurationFile, inputFolder);
+
+            var service = new InputReaderService();
+
+            Assert.Equal(["configured input"], service.ReadLines(3, "sample"));
+        }
+        finally
+        {
+            if (existingConfiguration is null)
+            {
+                File.Delete(configurationFile);
+            }
+            else
+            {
+                File.WriteAllText(configurationFile, existingConfiguration);
+            }
+
+            Directory.Delete(inputFolder, true);
+        }
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -102,13 +211,5 @@ public class InputReaderServiceTests
         {
             Directory.Delete(inputFolder, true);
         }
-    }
-
-
-    private static string CreateTemporaryFolder()
-    {
-        var path = Path.Combine(Path.GetTempPath(), $"AdventOfCode.Common.Tests-{Guid.NewGuid():N}");
-        Directory.CreateDirectory(path);
-        return path;
     }
 }
