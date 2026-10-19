@@ -23,7 +23,7 @@ public class InputReaderServiceTests
         {
             File.WriteAllText(configurationFile, "  input-folder" + Environment.NewLine);
 
-            Assert.Equal("input-folder", InputReaderService.ReadLocalFile());
+            Assert.Equal(Path.Combine(AppContext.BaseDirectory, "input-folder"), InputReaderService.ReadLocalFile());
         }
         finally
         {
@@ -35,6 +35,55 @@ public class InputReaderServiceTests
             {
                 File.WriteAllText(configurationFile, existingConfiguration);
             }
+        }
+    }
+
+    [Fact]
+    public void Constructor_Default_RelativeConfigurationPathUsesConfigurationDirectoryFromDifferentWorkingDirectory()
+    {
+        var configurationDirectory = AppContext.BaseDirectory;
+        var inputFolderName = $"input-folder-{Guid.NewGuid():N}";
+        var inputFolder = Path.Combine(configurationDirectory, inputFolderName);
+        var workingDirectory = CreateTemporaryFolder();
+        var configurationFile = Path.Combine(configurationDirectory, Constants.AOC_INPUT_PATH);
+        var existingConfiguration = File.Exists(configurationFile)
+            ? File.ReadAllText(configurationFile)
+            : null;
+        var variableName = $"ADVENT_OF_CODE_TEST_{Guid.NewGuid():N}";
+        var existingValue = Environment.GetEnvironmentVariable(variableName);
+        var currentDirectory = Directory.GetCurrentDirectory();
+        try
+        {
+            var dayFolder = Path.Combine(inputFolder, "Day03");
+            Directory.CreateDirectory(dayFolder);
+            File.WriteAllText(Path.Combine(dayFolder, "sample.txt"), "configured input");
+            Environment.SetEnvironmentVariable(variableName, inputFolderName);
+            File.WriteAllText(configurationFile, $"%{variableName}%");
+            Directory.SetCurrentDirectory(workingDirectory);
+
+            var service = new InputReaderService();
+
+            Assert.Equal(["configured input"], service.ReadLines(3, "sample"));
+        }
+        finally
+        {
+            Directory.SetCurrentDirectory(currentDirectory);
+            Environment.SetEnvironmentVariable(variableName, existingValue);
+            if (existingConfiguration is null)
+            {
+                File.Delete(configurationFile);
+            }
+            else
+            {
+                File.WriteAllText(configurationFile, existingConfiguration);
+            }
+
+            if (Directory.Exists(inputFolder))
+            {
+                Directory.Delete(inputFolder, true);
+            }
+
+            Directory.Delete(workingDirectory, true);
         }
     }
 

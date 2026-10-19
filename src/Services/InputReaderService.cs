@@ -51,7 +51,10 @@ namespace AdventOfCode.Common.Services
                 var file = Path.Combine(dir.FullName, Constants.AOC_INPUT_PATH);
                 if (File.Exists(file))
                 {
-                    return File.ReadAllText(file).Trim();
+                    var inputFolderPath = Environment.ExpandEnvironmentVariables(File.ReadAllText(file).Trim());
+                    return Path.IsPathRooted(inputFolderPath)
+                        ? inputFolderPath
+                        : Path.Combine(dir.FullName, inputFolderPath);
                 }
             }
 
