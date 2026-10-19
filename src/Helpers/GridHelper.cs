@@ -54,13 +54,17 @@ namespace AdventOfCode.Common.Helpers
                     var key = new Point(x, y);
                     var value = default(TValue);
                     if (gridData.ContainsKey(key))
+                    {
                         value = gridData[key];
+                    }
 
                     var element = DrawElementMethod?.Invoke(value) ?? value?.ToString() ?? " ";
                     text.Append(element);
                 }
                 if (y > minY)
+                {
                     text.AppendLine();
+                }
             }
 
             var result = text.ToString();
@@ -90,7 +94,9 @@ namespace AdventOfCode.Common.Helpers
                     var key = new Point(x, y);
                     var value = default(TValue);
                     if (gridData.ContainsKey(key))
+                    {
                         value = gridData[key];
+                    }
 
                     var element = DrawElementMethod?.Invoke(value) ?? value.ToString();
                     text.Append(element);

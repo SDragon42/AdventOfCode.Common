@@ -47,7 +47,9 @@ namespace AdventOfCode.Common.Services
         {
             var lines = ReadLines(day, name);
             if (lines == null)
+            {
                 return null;
+            }
 
             var text = string.Join(Environment.NewLine, lines);
             return text?.Length > 0 ? text : null;
