@@ -110,8 +110,10 @@ public class GridHelperTests
     }
 
     [Fact]
-    public void PointToIndex_WithOrigin_IncludesOriginOffset()
+    public void PointToIndex_WithOrigin_RoundTripsIndexToPoint()
     {
-        Assert.Equal(6, GridHelper.PointToIndex(new Point(1, 0), 3, new Point(2, 1)));
+        var origin = new Point(2, 1);
+
+        Assert.Equal(0, GridHelper.PointToIndex(GridHelper.IndexToPoint(0, 3, origin), 3, origin));
     }
 }

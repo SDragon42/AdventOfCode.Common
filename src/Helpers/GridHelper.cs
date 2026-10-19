@@ -163,8 +163,8 @@ namespace AdventOfCode.Common.Helpers
         /// <returns>The corresponding array index.</returns>
         public static int PointToIndex(Point point, int xMax, Point? origin = null)
         {
-            var x = point.X + (origin?.X ?? 0);
-            var y = point.Y + (origin?.Y ?? 0);
+            var x = point.X - (origin?.X ?? 0);
+            var y = point.Y - (origin?.Y ?? 0);
 
             var index = y * xMax + x;
             return index;
