@@ -18,6 +18,19 @@ namespace AdventOfCode.Common.Services
         /// <param name="inputFolderPath">The path to the folder containing input files.</param>
         public InputReaderService(string inputFolderPath)
         {
+            if (string.IsNullOrWhiteSpace(inputFolderPath))
+            {
+                throw new ArgumentException("Input folder path cannot be null or whitespace.", nameof(inputFolderPath));
+            }
+
+            // Normalizes the path format and checks syntax without hitting the disk
+            inputFolderPath = Path.GetFullPath(inputFolderPath);
+
+            if (!Directory.Exists(inputFolderPath))
+            {
+                Directory.CreateDirectory(inputFolderPath);
+            }
+
             _inputFolderPath = inputFolderPath;
         }
 
@@ -31,12 +44,27 @@ namespace AdventOfCode.Common.Services
             return filename;
         }
 
+        private void CreateDataFileIfNotExists(string path)
+        {
+            var directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (!File.Exists(path))
+            {
+                File.Create(path).Dispose();
+            }
+        }
+
         /// <inheritdoc/>
         public IEnumerable<string> ReadLines(int day, string name)
         {
             try
             {
                 var path = BuildDataFilePath(day, name);
+                CreateDataFileIfNotExists(path);
                 return File.ReadLines(path);
             }
             catch { return null; }

@@ -1,21 +1,21 @@
 namespace AdventOfCode.Common.Tests.Extensions.IEnumerableExtensionsTests;
 
-public class CartesianProductTests
+public class CartesianProductTests(ITestOutputHelper output) : IEnumerableExtensionsTestBase(output)
 {
     [Fact]
     public void CartesianProduct_MultipleSequences_ReturnsEveryCombination()
     {
-        IEnumerable<IEnumerable<int>> sequences = new[]
-        {
-            new[] { 1, 2 },
-            new[] { 3, 4 }
-        };
+        IEnumerable<IEnumerable<int>> sequences =
+        [
+            [1, 2],
+            [3, 4]
+        ];
 
         var result = sequences.CartesianProduct()
             .Select(values => string.Join(",", values))
             .ToArray();
 
-        Assert.Equal(new[] { "1,3", "1,4", "2,3", "2,4" }, result);
+        Assert.Equal(["1,3", "1,4", "2,3", "2,4"], result);
     }
 
     [Fact]
@@ -32,11 +32,11 @@ public class CartesianProductTests
     [Fact]
     public void CartesianProduct_ContainsEmptySequence_ReturnsNoCombinations()
     {
-        IEnumerable<IEnumerable<int>> sequences = new[]
-        {
-            new[] { 1, 2 },
-            Array.Empty<int>()
-        };
+        IEnumerable<IEnumerable<int>> sequences =
+        [
+            [1, 2],
+            []
+        ];
 
         Assert.Empty(sequences.CartesianProduct());
     }

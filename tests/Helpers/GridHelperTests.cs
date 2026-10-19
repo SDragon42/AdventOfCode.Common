@@ -63,11 +63,11 @@ public class GridHelperTests
     [Fact]
     public void DrawScreenGrid2D_ListGrid_RendersRowsAndUsesDrawMethod()
     {
-        IList<IList<int>> grid = new List<IList<int>>
-        {
-            new List<int> { 1, 2 },
-            new List<int> { 3, 4 }
-        };
+        IList<IList<int>> grid =
+        [
+            [1, 2],
+            [3, 4]
+        ];
 
         var result = GridHelper.DrawScreenGrid2D(grid, value => $"[{value}]");
 
@@ -77,10 +77,10 @@ public class GridHelperTests
     [Fact]
     public void DrawScreenGrid2D_ListGrid_UsesDefaultValueFormatting()
     {
-        IList<IList<int>> grid = new List<IList<int>>
-        {
-            new List<int> { 1, 2 }
-        };
+        IList<IList<int>> grid =
+        [
+            [1, 2]
+        ];
 
         Assert.Equal("12" + Environment.NewLine, GridHelper.DrawScreenGrid2D(grid));
     }

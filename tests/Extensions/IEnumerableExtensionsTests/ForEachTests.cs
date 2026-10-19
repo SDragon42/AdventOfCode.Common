@@ -1,11 +1,7 @@
 ﻿namespace AdventOfCode.Common.Tests.Extensions.IEnumerableExtensionsTests;
 
-public class ForEachTests : IEnumerableExtensionsTestBase
+public class ForEachTests(ITestOutputHelper output) : IEnumerableExtensionsTestBase(output)
 {
-    public ForEachTests(ITestOutputHelper output) : base(output) { }
-
-
-
     [Fact]
     public void ForEach_ValidSource_HitsEveryElement()
     {
@@ -13,9 +9,9 @@ public class ForEachTests : IEnumerableExtensionsTestBase
         var expected = items.Sum();
 
         int sumTotal = 0;
-        var action = (int value) => { sumTotal += value; };
+        void Action(int value) { sumTotal += value; }
 
-        IEnumerableExtensions.ForEach(items, action);
+        IEnumerableExtensions.ForEach(items, Action);
 
         Assert.Equal(expected, sumTotal);
     }
@@ -25,10 +21,10 @@ public class ForEachTests : IEnumerableExtensionsTestBase
     {
         List<int>? items = default;
 
-        var action = (int value) => { var x = value; };
+        static void Action(int value) { }
 
         Assert.Throws<ArgumentNullException>(
-            () => IEnumerableExtensions.ForEach(items, action));
+            () => IEnumerableExtensions.ForEach(items, Action));
     }
 
     [Fact]

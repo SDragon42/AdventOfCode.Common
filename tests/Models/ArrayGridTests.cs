@@ -8,10 +8,10 @@ public class ArrayGridTests
     [Fact]
     public void Constructor_TransformsRowsAndExposesFlatGrid()
     {
-        var grid = new ArrayGrid<int>(new[] { "12", "34" }, character => character - '0');
+        var grid = new ArrayGrid<int>(["12", "34"], character => character - '0');
 
         Assert.Equal(4, grid.Count);
-        Assert.Equal(new[] { 1, 2, 3, 4 }, grid.Grid);
+        Assert.Equal([1, 2, 3, 4], grid.Grid);
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class ArrayGridTests
     [Fact]
     public void Constructor_NullTransform_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => new ArrayGrid<char>(new[] { "a" }, null!));
+        Assert.Throws<ArgumentNullException>(() => new ArrayGrid<char>(["a"], null!));
     }
 
     [Theory]
@@ -107,6 +107,6 @@ public class ArrayGridTests
 
     private static ArrayGrid<char> CreateGrid()
     {
-        return new ArrayGrid<char>(new[] { "abc", "def" }, character => character);
+        return new ArrayGrid<char>(["abc", "def"], character => character);
     }
 }

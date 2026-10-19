@@ -1,19 +1,18 @@
 ﻿namespace AdventOfCode.Common.Tests.Extensions.IEnumerableExtensionsTests;
 
-public class WindowedTests : IEnumerableExtensionsTestBase
+public class WindowedTests(ITestOutputHelper output) : IEnumerableExtensionsTestBase(output)
 {
-    public WindowedTests(ITestOutputHelper output) : base(output) { }
-
-
-
-    public static IEnumerable<object[]> Windowed_SmallerSize_ReturnsExpectedElements_Params()
+    public static TheoryData<int, int> Windowed_SmallerSize_ReturnsExpectedElements_Params()
     {
+        var data = new TheoryData<int, int>();
         var count = GetTestData().Count;
         for (int windowSize = 1; windowSize <= count + 1; windowSize++)
         {
             var expectedNumWindows = count - windowSize + 1;
-            yield return new object[] { windowSize, expectedNumWindows };
+            data.Add(windowSize, expectedNumWindows);
         }
+
+        return data;
     }
     [Theory]
     [MemberData(nameof(Windowed_SmallerSize_ReturnsExpectedElements_Params))]
@@ -28,11 +27,13 @@ public class WindowedTests : IEnumerableExtensionsTestBase
 
 
 
-    public static IEnumerable<object[]> Windowed_LargerSize_ReturnsNothing_Params()
+    public static TheoryData<int, int> Windowed_LargerSize_ReturnsNothing_Params()
     {
+        var data = new TheoryData<int, int>();
         var count = GetTestData().Count;
         var windowSize = count + 1;
-        yield return new object[] { windowSize, 0 };
+        data.Add(windowSize, 0);
+        return data;
     }
     [Theory]
     [MemberData(nameof(Windowed_LargerSize_ReturnsNothing_Params))]

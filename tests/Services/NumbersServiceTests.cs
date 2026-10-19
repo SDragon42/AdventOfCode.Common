@@ -1,10 +1,8 @@
-using System.IO;
-
 namespace AdventOfCode.Common.Tests.Services;
 
 public class NumbersServiceTests
 {
-    private readonly INumbersService _numbersService = new NumbersService();
+    private readonly NumbersService _numbersService = new();
 
 
     [Theory]
@@ -36,20 +34,24 @@ public class NumbersServiceTests
     [Fact]
     public void HighestCommonFactor_TwoItemList_ReturnsExpected()
     {
-        Assert.Equal(6, _numbersService.HighestCommonFactor(new long[] { 18, 24 }));
+        Assert.Equal(6, _numbersService.HighestCommonFactor([18, 24]));
     }
 
     [Theory]
     [MemberData(nameof(Data_HighestCommonFactor_NullList_ThrowsArgumentException))]
-    public void HighestCommonFactor_NullList_ThrowsArgumentException(IList<long> values)
+    public void HighestCommonFactor_NullList_ThrowsArgumentException(long[] values)
     {
         Assert.Throws<ArgumentException>(() => _numbersService.HighestCommonFactor(values));
     }
-    public static IEnumerable<object[]> Data_HighestCommonFactor_NullList_ThrowsArgumentException()
+    public static TheoryData<long[]> Data_HighestCommonFactor_NullList_ThrowsArgumentException()
     {
-        yield return new object[] { null! };
-        yield return new object[] { new long[] { } };
-        yield return new object[] { new long[] { 42 } };
+        var data = new TheoryData<long[]>
+        {
+            null!,
+            Array.Empty<long>(),
+            ([42])
+        };
+        return data;
     }
 
 
@@ -80,46 +82,58 @@ public class NumbersServiceTests
 
     [Theory]
     [MemberData(nameof(Data_LowestCommonMultiple_ValidListOfNumbers))]
-    public void LowestCommonMultiple_ValidListOfNumbers_ReturnsExpected(IList<long> values, long expected)
+    public void LowestCommonMultiple_ValidListOfNumbers_ReturnsExpected(long[] values, long expected)
     {
         var result = _numbersService.LowestCommonMultiple(values);
 
         Assert.Equal(expected, result);
     }
-    public static IEnumerable<object[]> Data_LowestCommonMultiple_ValidListOfNumbers()
+    public static TheoryData<long[], long> Data_LowestCommonMultiple_ValidListOfNumbers()
     {
-        yield return new object[] { new long[] { 2, 5 }, 10 };
-        yield return new object[] { new long[] { 60, 90 }, 180 };
-        yield return new object[] { new long[] { 21, 12 }, 84 };
-        yield return new object[] { new long[] { 25, 15, 30 }, 150 };
-        yield return new object[] { new long[] { long.MaxValue, long.MaxValue }, long.MaxValue };
+        var data = new TheoryData<long[], long>
+        {
+            { [2, 5], 10 },
+            { [60, 90], 180 },
+            { [21, 12], 84 },
+            { [25, 15, 30], 150 },
+            { [long.MaxValue, long.MaxValue], long.MaxValue }
+        };
+        return data;
     }
 
 
     [Theory]
     [MemberData(nameof(Data_LowestCommonMultiple_InvalidListOfNumbers))]
-    public void LowestCommonMultiple_InvalidListOfNumbers_ShouldThrowArgumentException(IList<long> values)
+    public void LowestCommonMultiple_InvalidListOfNumbers_ShouldThrowArgumentException(long[] values)
     {
         Assert.Throws<ArgumentException>(() => _numbersService.LowestCommonMultiple(values));
     }
-    public static IEnumerable<object[]> Data_LowestCommonMultiple_InvalidListOfNumbers()
+    public static TheoryData<long[]> Data_LowestCommonMultiple_InvalidListOfNumbers()
     {
-        yield return new object[] { Array.Empty<long>() };
-        yield return new object[] { new long[] { 5 } };
-        yield return new object[] { new long[] { -1, 5 } };
-        yield return new object[] { new long[] { 0, 10 } };
-        yield return new object[] { new long[] { 25, -15, 30 } };
+        var data = new TheoryData<long[]>
+        {
+            { Array.Empty<long>() },
+            { [5] },
+            { [-1, 5] },
+            { [0, 10] },
+            { [25, -15, 30] }
+        };
+        return data;
     }
 
 
     [Theory]
     [MemberData(nameof(Data_LowestCommonMultiple_NullList_ThrowsArgumentException))]
-    public void LowestCommonMultiple_NullList_ThrowsArgumentException(IList<long> values)
+    public void LowestCommonMultiple_NullList_ThrowsArgumentException(long[] values)
     {
         Assert.Throws<ArgumentException>(() => _numbersService.LowestCommonMultiple(values));
     }
-    public static IEnumerable<object[]> Data_LowestCommonMultiple_NullList_ThrowsArgumentException()
+    public static TheoryData<long[]> Data_LowestCommonMultiple_NullList_ThrowsArgumentException()
     {
-        yield return new object[] { null! };
+        var data = new TheoryData<long[]>
+        {
+            { null! }
+        };
+        return data;
     }
 }
