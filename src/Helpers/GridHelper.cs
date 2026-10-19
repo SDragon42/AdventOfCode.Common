@@ -54,13 +54,17 @@ namespace AdventOfCode.Common.Helpers
                     var key = new Point(x, y);
                     var value = default(TValue);
                     if (gridData.ContainsKey(key))
+                    {
                         value = gridData[key];
+                    }
 
                     var element = DrawElementMethod?.Invoke(value) ?? value?.ToString() ?? " ";
                     text.Append(element);
                 }
                 if (y > minY)
+                {
                     text.AppendLine();
+                }
             }
 
             var result = text.ToString();
@@ -90,7 +94,9 @@ namespace AdventOfCode.Common.Helpers
                     var key = new Point(x, y);
                     var value = default(TValue);
                     if (gridData.ContainsKey(key))
+                    {
                         value = gridData[key];
+                    }
 
                     var element = DrawElementMethod?.Invoke(value) ?? value.ToString();
                     text.Append(element);
@@ -157,8 +163,8 @@ namespace AdventOfCode.Common.Helpers
         /// <returns>The corresponding array index.</returns>
         public static int PointToIndex(Point point, int xMax, Point? origin = null)
         {
-            var x = point.X + (origin?.X ?? 0);
-            var y = point.Y + (origin?.Y ?? 0);
+            var x = point.X - (origin?.X ?? 0);
+            var y = point.Y - (origin?.Y ?? 0);
 
             var index = y * xMax + x;
             return index;

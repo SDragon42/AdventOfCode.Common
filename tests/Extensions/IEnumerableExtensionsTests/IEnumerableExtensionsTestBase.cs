@@ -1,14 +1,8 @@
 ﻿namespace AdventOfCode.Common.Tests.Extensions.IEnumerableExtensionsTests;
 
-public abstract class IEnumerableExtensionsTestBase
+public abstract class IEnumerableExtensionsTestBase(ITestOutputHelper output)
 {
-    protected readonly ITestOutputHelper _output;
-
-    public IEnumerableExtensionsTestBase(ITestOutputHelper output)
-    {
-        _output = output;
-    }
-
+    protected readonly ITestOutputHelper _output = output;
 
     protected static IList<int> GetTestData()
     {

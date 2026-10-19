@@ -1,0 +1,36 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "AdventOfCode.Common.sln"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "AdventOfCode.Common:test",
+            "command": "dotnet", 
+            "type": "process",
+            "args": [
+                "test",
+                "AdventOfCode.Common.sln",
+                "--logger", "console;verbosity=normal"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

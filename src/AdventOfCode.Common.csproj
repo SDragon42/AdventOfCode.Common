@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>AdventOfCode.Common</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Title>Advent of Code - Common</Title>
     <Authors>SDragon42</Authors>
     <PackageId>$(AssemblyName)</PackageId>
@@ -13,7 +13,12 @@
     <RepositoryUrl>https://github.com/SDragon42/AdventOfCode.Common</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AdventOfCode.Common.Tests" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\README.md">

@@ -15,4 +15,12 @@ public class ToInt64Tests
         var result = StringExtensions.ToInt64(value);
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("not a number", typeof(FormatException))]
+    [InlineData("9223372036854775808", typeof(OverflowException))]
+    public void ToInt64_InvalidNumberString_ThrowsExpectedException(string value, Type exceptionType)
+    {
+        Assert.IsType(exceptionType, Record.Exception(() => StringExtensions.ToInt64(value)));
+    }
 }

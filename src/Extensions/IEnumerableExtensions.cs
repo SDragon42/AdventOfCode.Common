@@ -17,11 +17,13 @@ namespace AdventOfCode.Common.Extensions
         /// <param name="actionMethod">The action to execute on each element.</param>
         public static void ForEach<T>(this IEnumerable<T> elements, Action<T> actionMethod)
         {
-            if (elements is null) throw new ArgumentNullException(nameof(elements));
-            if (actionMethod is null) throw new ArgumentNullException(nameof(actionMethod));
+            if (elements is null) { throw new ArgumentNullException(nameof(elements)); }
+            if (actionMethod is null) { throw new ArgumentNullException(nameof(actionMethod)); }
 
             foreach (var item in elements)
+            {
                 actionMethod(item);
+            }
         }
 
 
@@ -35,8 +37,8 @@ namespace AdventOfCode.Common.Extensions
         /// <remarks>Code from: https://stackoverflow.com/a/8877876/6136</remarks>
         public static IEnumerable<T[]> Windowed<T>(this IEnumerable<T> elements, int windowSize)
         {
-            if (elements is null) throw new ArgumentNullException(nameof(elements));
-            if (windowSize <= 0) throw new ArgumentOutOfRangeException(nameof(windowSize));
+            if (elements is null) { throw new ArgumentNullException(nameof(elements)); }
+            if (windowSize <= 0) { throw new ArgumentOutOfRangeException(nameof(windowSize)); }
 
             using (var e = elements.GetEnumerator())
             {
@@ -51,9 +53,13 @@ namespace AdventOfCode.Common.Extensions
                     i = (i + 1) % windowSize;
 
                     if (r == 0)
+                    {
                         yield return CreateWindowArray(j => arr[(i + j) % windowSize]);
+                    }
                     else
+                    {
                         r--;
+                    }
                 }
             }
 
@@ -62,7 +68,9 @@ namespace AdventOfCode.Common.Extensions
             {
                 var output = new T[windowSize];
                 for (var i = 0; i < windowSize; i++)
+                {
                     output[i] = GetValue(i);
+                }
                 return output;
             }
         }
@@ -91,7 +99,9 @@ namespace AdventOfCode.Common.Extensions
             {
                 var nextItems = items.Where(i => !i.Equals(item));
                 foreach (var result in GetPermutations(nextItems))
+                {
                     yield return new T[] { item }.Concat(result);
+                }
             }
         }
 

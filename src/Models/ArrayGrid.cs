@@ -25,10 +25,8 @@ namespace AdventOfCode.Common.Models
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="lines"/> or <paramref name="transformMethod"/> is null.</exception>
         public ArrayGrid(IList<string> lines, Func<char, TCell> transformMethod)
         {
-            if (lines == null)
-                throw new ArgumentNullException(nameof(lines));
-            if (transformMethod == null)
-                throw new ArgumentNullException(nameof(transformMethod));
+            if (lines == null) { throw new ArgumentNullException(nameof(lines)); }
+            if (transformMethod == null) { throw new ArgumentNullException(nameof(transformMethod)); }
 
             _ySize = lines.Count;
             _xSize = lines.First().Length;
@@ -52,13 +50,13 @@ namespace AdventOfCode.Common.Models
 
         /// <inheritdoc/>
         public Point IndexToPoint(int index) => GridHelper.IndexToPoint(index, _xSize);
-        
-        
+
+
         /// <inheritdoc/>
         public int PointToIndex(Point point) => GridHelper.PointToIndex(point, _xSize);
-        
-        
-        
+
+
+
         /// <summary>
         /// Gets or sets the cell at the specified array index.
         /// </summary>
