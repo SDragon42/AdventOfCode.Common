@@ -97,7 +97,10 @@ public class GridHelperTests
     [Fact]
     public void IndexToPoint_WithOrigin_OffsetsGridPoint()
     {
-        Assert.Equal(new Point(12, -1), GridHelper.IndexToPoint(5, 3, new Point(10, -2)));
+        var originPoint = new Point(10, -2);
+        var myIndex = 5;
+        var expected = new Point(12, -1);
+        Assert.Equal(expected, GridHelper.IndexToPoint(myIndex, 3, originPoint));
     }
 
     [Theory]
@@ -110,10 +113,13 @@ public class GridHelperTests
     }
 
     [Fact]
-    public void PointToIndex_WithOrigin_RoundTripsIndexToPoint()
+    public void PointToIndex_WithOrigin_IncludesOriginOffset()
     {
-        var origin = new Point(2, 1);
+        var originPoint = new Point(10, -2);
+        var myPoint = new Point(12, -1);
+        var expected = 5;
 
-        Assert.Equal(0, GridHelper.PointToIndex(GridHelper.IndexToPoint(0, 3, origin), 3, origin));
+        Assert.Equal(expected, GridHelper.PointToIndex(myPoint, 3, originPoint));
     }
+
 }
