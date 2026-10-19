@@ -18,51 +18,13 @@
         },
 
         {
-            "label": "Clear local Nuget Packages",
-            "command": "NuGets-Clear-Cache",
-            "type": "shell",
-            "args": [
-                "-RemoveLocal"
-            ],
-            "group": {
-                "kind": "build"
-            },
-            "problemMatcher": "$msCompile"
-        },
-
-        {
-            "label": "Deploy Local Nuget Packages",
-            "command": "NuGets-Deploy",
-            "type": "shell",
-            "args": [],
-            "group": {
-                "kind": "build"
-            },
-            "problemMatcher": "$msCompile"
-        },
-
-        {
-            "label": "Build & Deploy Nuget Package",
-            "dependsOn": [ 
-                "Build",
-                "Clear local Nuget Packages",
-                "Deploy Local Nuget Packages"
-            ],
-            "dependsOrder": "sequence",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-
-        {
             "label": "AdventOfCode.Common:test",
             "command": "dotnet", 
             "type": "process",
             "args": [
                 "test",
                 "AdventOfCode.Common.sln",
-                "--logger", "\"console;verbosity=normal\""
+                "--logger", "console;verbosity=normal"
             ],
             "group": {
                 "kind": "test",

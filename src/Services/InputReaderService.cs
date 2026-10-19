@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+
 using AdventOfCode.Common.Services.Interfaces;
 
 namespace AdventOfCode.Common.Services
@@ -12,7 +13,7 @@ namespace AdventOfCode.Common.Services
     {
         private readonly string _inputFolderPath;
 
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InputReaderService"/> class using the local input path file.
         /// </summary>
@@ -38,7 +39,7 @@ namespace AdventOfCode.Common.Services
             {
                 throw new ArgumentException("Input folder path cannot be null or whitespace.", nameof(inputFolderPath));
             }
-            
+
             _inputFolderPath = NormalizePath(inputFolderPath);
         }
 
@@ -95,7 +96,11 @@ namespace AdventOfCode.Common.Services
 
             if (!File.Exists(path))
             {
-                File.Create(path).Dispose();
+                try
+                {
+                    File.Open(path, FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite).Dispose();
+                }
+                catch (IOException) when (File.Exists(path)) { } // Another caller created the file first.
             }
         }
 
