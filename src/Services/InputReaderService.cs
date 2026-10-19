@@ -47,7 +47,6 @@ namespace AdventOfCode.Common.Services
         {
             for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
             {
-                Console.WriteLine($"Checking directory: {dir.FullName}");
                 var file = Path.Combine(dir.FullName, Constants.AOC_INPUT_PATH);
                 if (File.Exists(file))
                 {
