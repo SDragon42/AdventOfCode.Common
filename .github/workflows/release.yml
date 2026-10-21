@@ -50,15 +50,12 @@ jobs:
         run: dotnet pack --configuration Release --no-build --output ./nupkg
 
       # Publish the package to GitHub Packages (SDragon42 feed).
-      # - NUGET_API_KEY is the workflow's GITHUB_TOKEN (needs packages: write).
       # - First, fail early if the Pack step produced no .nupkg file.
       # - --skip-duplicate makes pushing an existing version a no-op instead of an error,
       #   so the output is captured and scanned: if the version already exists, a warning
       #   is raised as a reminder to bump <Version> in src/AdventOfCode.Common.csproj.
       # - Any other push failure prints the output and fails the job.
       - name: Push NuGet Package
-        env:
-          NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if ! compgen -G "./nupkg/*.nupkg" > /dev/null; then
             echo "::error::No .nupkg files found in ./nupkg"
@@ -66,7 +63,7 @@ jobs:
           fi
           output=$(dotnet nuget push ./nupkg/*.nupkg \
             --source https://nuget.pkg.github.com/SDragon42/index.json \
-            --api-key "$NUGET_API_KEY" \
+            --api-key ${{ secrets.PUBLISH_TOKEN }} \
             --skip-duplicate 2>&1) || { echo "$output"; exit 1; }
           echo "$output"
           if echo "$output" | grep -Eqi 'conflict|already exists'; then
