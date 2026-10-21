@@ -5,9 +5,9 @@ on:
   push:
     branches:
       - main
-#    paths:
-#      - 'src/**'
-#      - 'README.md'
+    paths:
+      - 'src/**'
+      - 'README.md'
 
 # Least privilege: read the repo, and write to GitHub Packages using GITHUB_TOKEN.
 permissions:

@@ -6,7 +6,7 @@
     <Version>2.1.1</Version>
     <Title>Advent of Code - Common</Title>
     <Authors>SDragon42</Authors>
-    <PackageId>$(AssemblyName)</PackageId>
+    <PackageId>SDragon42.$(AssemblyName)</PackageId>
     <Description>Common services/functions for running the Advent of Code challenge puzzles.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/SDragon42/AdventOfCode.Common</RepositoryUrl>
