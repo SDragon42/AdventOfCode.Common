@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Build : AdventOfCode.Common",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -12,13 +12,31 @@
                 "AdventOfCode.Common.sln"
             ],
             "group": {
-                "kind": "build"
+                "kind": "build",
+                "isDefault": true
             },
             "problemMatcher": "$msCompile"
         },
 
         {
-            "label": "AdventOfCode.Common:test",
+            "label": "Pack : AdventOfCode.Common",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "pack",
+                "AdventOfCode.Common.sln",
+                "--configuration", "Release",
+                "--output", "./nupkg"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": "$msCompile"
+        },
+
+        {
+            "label": "Test : AdventOfCode.Common",
             "command": "dotnet", 
             "type": "process",
             "args": [
