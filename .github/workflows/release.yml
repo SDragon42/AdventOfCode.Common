@@ -1,0 +1,74 @@
+name: Release NuGet Package
+
+# Release only when changes to the library or README land on main.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'README.md'
+
+# Least privilege: read the repo, and write to GitHub Packages using GITHUB_TOKEN.
+permissions:
+  contents: read
+  packages: write
+
+# Queue overlapping releases (never cancel one mid-publish) so they run one at a time.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      # Get the repository source.
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Install the .NET 8 SDK used to build, test and pack.
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Download NuGet dependencies for the solution.
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Compile in Release mode; restore already ran, so skip it.
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      # Run the unit tests; a failure stops the release before anything is published.
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+      # Create the .nupkg from the already-built Release output into ./nupkg.
+      - name: Pack
+        run: dotnet pack --configuration Release --no-build --output ./nupkg
+
+      # Publish the package to GitHub Packages (SDragon42 feed).
+      # - NUGET_API_KEY is the workflow's GITHUB_TOKEN (needs packages: write).
+      # - First, fail early if the Pack step produced no .nupkg file.
+      # - --skip-duplicate makes pushing an existing version a no-op instead of an error,
+      #   so the output is captured and scanned: if the version already exists, a warning
+      #   is raised as a reminder to bump <Version> in src/AdventOfCode.Common.csproj.
+      # - Any other push failure prints the output and fails the job.
+      - name: Push NuGet Package
+        env:
+          NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if ! compgen -G "./nupkg/*.nupkg" > /dev/null; then
+            echo "::error::No .nupkg files found in ./nupkg"
+            exit 1
+          fi
+          output=$(dotnet nuget push ./nupkg/*.nupkg \
+            --source https://nuget.pkg.github.com/SDragon42/index.json \
+            --api-key "$NUGET_API_KEY" \
+            --skip-duplicate 2>&1) || { echo "$output"; exit 1; }
+          echo "$output"
+          if echo "$output" | grep -Eqi 'conflict|already exists'; then
+            echo "::warning::Package version already exists and was skipped. Did you forget to bump <Version> in src/AdventOfCode.Common.csproj?"
+          fi
